@@ -25,7 +25,7 @@ def kronPower(ket: torch.Tensor, times: int) -> torch.Tensor:
         result = torch.kron(result, ket)
         times -= 1
     
-    return result
+    return result.to(torch.cfloat)
 
 def qubitWiseMultiply(ψ: torch.Tensor, n: int, U: torch.Tensor, i_w: int, listOfControlBits = []) -> torch.Tensor:
     inclusionMask = 0
@@ -97,7 +97,15 @@ def applySwap(ψ: torch.Tensor, n: int, i_w: int, j_w: int, listOfControlBits = 
     
     return b
 
-def test_circuit() -> torch.Tensor:
+def measureState(ψ: torch.Tensor) -> int:
+    p = torch.abs(ψ.flatten())**2
+    collapsed = torch.multinomial(p, 1)
+    
+    return collapsed.item()
+
+def measureQubit():
+
+def test_circuit1() -> torch.Tensor:
     n = 3
     ψ = kronPower(z_state, n).to(torch.cfloat)
     ψ = qubitWiseMultiply(ψ, n,h_gate,1)
@@ -131,7 +139,7 @@ def test_circuit3() -> torch.Tensor:
     return ψ
 
 def main() -> None:
-    print(test_circuit3())
+    print(test_circuit1())
 
 if __name__ == '__main__':
     main()
