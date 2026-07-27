@@ -1,5 +1,5 @@
 # Simple Quantum in Python
-Library that creates simple quantum circuits simulations\
+Library that facilitates the creation and simulation of simple quantum circuits.
 
 **Variables and gates:**\
 `z_state:` $\lvert 0 \rangle$\
