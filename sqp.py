@@ -97,49 +97,33 @@ def applySwap(ψ: torch.Tensor, n: int, i_w: int, j_w: int, listOfControlBits = 
     
     return b
 
+def probabilities(ψ: torch.Tensor) -> torch.Tensor:
+    return torch.abs(ψ.flatten())**2
+
 def measureState(ψ: torch.Tensor) -> int:
-    p = torch.abs(ψ.flatten())**2
+    p = probabilities(ψ)
     collapsed = torch.multinomial(p, 1)
     
     return collapsed.item()
 
-def measureQubit():
-
-def test_circuit1() -> torch.Tensor:
-    n = 3
-    ψ = kronPower(z_state, n).to(torch.cfloat)
-    ψ = qubitWiseMultiply(ψ, n,h_gate,1)
-    ψ = qubitWiseMultiply(ψ, n,x_gate,2)
-    ψ = qubitWiseMultiply(ψ, n,x_gate,0,[[1,True]])
-    ψ = qubitWiseMultiply(ψ, n,z_gate,0)
-    ψ = qubitWiseMultiply(ψ, n,x_gate,2,[[1,True]])
+def measureQubit(ψ: torch.Tensor, n: int, i_w: int):
+    p = [0.0, 0.0]
+    for i in range(1 << n):
+        ps = torch.abs(ψ[i])**2
+        
+        if ((i >> i_w) & 1): p[1] += ps
+        else: p[0] += ps
     
-    return ψ
-
-def test_circuit2() -> torch.Tensor:
-    n = 2
-    ψ = kronPower(z_state, 2).to(torch.cfloat)
-    ψ = qubitWiseMultiply(ψ, n, y_gate, 0)
-    ψ = qubitWiseMultiply(ψ, n, h_gate, 0)
-    ψ = qubitWiseMultiply(ψ, n, x_gate, 1, [[0, True]])
-    ψ = qubitWiseMultiply(ψ, n, z_gate, 1)
+    out = torch.multinomial(torch.tensor(p), 1).item()
     
-    return ψ
-
-def test_circuit3() -> torch.Tensor:
-    ψ = kronPower(z_state, 3).to(torch.cfloat)
-    ψ = qubitWiseMultiply(ψ, 3, h_gate, 0)
-    ψ = applySwap(ψ, 3, 0, 2)
-    ψ = qubitWiseMultiply(ψ, 3, x_gate, 1, [[2, False]])
-    ψ = qubitWiseMultiply(ψ, 3, x_gate, 0, [[1, True]])
-    ψ = qubitWiseMultiply(ψ, 3, y_gate, 0)
-    ψ = applySwap(ψ, 3, 1, 2, [[0, True]])
-    ψ = qubitWiseMultiply(ψ, 3, z_gate, 1)
+    newψ = ψ.clone()
+    for i in range(1 << n):
+        bit = (i >> i_w) & 1
+        if (bit != out): newψ[i] = 0
     
-    return ψ
+    newψ /= torch.linalg.norm(newψ)
+    
+    return out, newψ
 
-def main() -> None:
-    print(test_circuit1())
-
-if __name__ == '__main__':
-    main()
+def infoPrint(ψ: torch.Tensor) -> None:
+    print(f"ψ: {ψ},\nProbabilities: {probabilities(ψ)},\nMeasured state: {measureState(ψ)}")
