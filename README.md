@@ -15,7 +15,7 @@ Library that facilitates the creation and simulation of simple quantum circuits.
 `kronPower(ket, times):` Computes the tensor power of a quantum state. Inputs are $\lvert \psi \rangle$ and a positive integer and return $\lvert \psi \rangle^{\otimes times}$.\
 `qubitWiseMultiply(ψ, n, U, i_w, listOfControlBits):` Apply a single-qubit gate to qubit i_w. Inputs are $\psi$, quantum state, $n$, number of qubits in simulation, $U$, gate being applied, i_w, index of line where gate is being applied and listOfControlBits, array with array in the format [qubit, True or False] apply a control bit to a line.\
 `applySwap(ψ, n, i_w, j_w, listOfControlBits):` Swap the values of qubit *i_w* and *j_w*. Inputs are $\psi$, quantum state, n, number of bits, i_w, qubit 1, j_w, qubit 2, and also a list of the control bits.\
-`probabilities(ψ):` Print the probability of each qubit in state $\psi$. Input is $\psi$, quantum state.\
+`probabilities(ψ):` Return the probability of each qubit in state $\psi$. Input is $\psi$, quantum state.\
 `measureState(ψ):` Collapse the quantum state $\psi$ and return its final value. Input is $\psi$, quantum state.\
 `measureQubit(ψ, n, i_w):` Measure a specific qubit from the $\psi$, return the value of the qubit and the new quantum state. Inputs are $psi$, quantum state, $n$, number of qubits, i_w, index of qubit being measured.\
 `infoPrint(ψ):` Print the quantum state, the probabilities of each qubit, and the final measured state. Input is $\psi$, quantum state. (It will collapse all the qubits in the circuit due to the measureState method).
