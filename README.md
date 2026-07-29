@@ -32,7 +32,7 @@ Diagram I used to design the quantum teleportation method example [2]:
 ![Teleportation circuit](https://quantum.cloud.ibm.com/learning/images/courses/basics-of-quantum-information/entanglement-in-action/teleportation-time-steps.svg?dpl=0-1-1564-8eac441376a9)
 **`examples/simple_teleportation.py`**
 
-# Future aditions
+# Future additions
 - More gates, and changing gates
 - $\text{QFT}$ and $\text{QFT}^{\dagger}$
 - Then, more example circuits!
