@@ -39,4 +39,4 @@ Diagram I used to design the quantum teleportation method example [2]:
 
 # References
 [1] https://arxiv.org/pdf/2506.08142 \
-[2] https://quantum.cloud.ibm.com/learning/en/courses/basics-of-quantum-information/entanglement-in-action/quantum-teleportation \
+[2] https://quantum.cloud.ibm.com/learning/en/courses/basics-of-quantum-information/entanglement-in-action/quantum-teleportation
