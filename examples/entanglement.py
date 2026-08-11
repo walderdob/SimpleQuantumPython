@@ -6,14 +6,15 @@ import torch
 def entanglement():
     n = 2
     ψ = kronPower(z_state, n)
-    # Entangling qubits q1 and q0
-    ψ = qubitWiseMultiply(ψ, n, h_gate, 0)
-    ψ = qubitWiseMultiply(ψ, n, x_gate, 1, [[0, True]])
+    ψ = applyH(ψ, 0)
+    ψ = applyCNOT(ψ, 0, 1)
+    ψ = applyZ(ψ, 0)
     
-    return ψ    
+    return ψ
 
 def main():
-    infoPrint(entanglement())
+    printState(entanglement())
+    printProbabilities(entanglement())
     
     
 if __name__ == '__main__':

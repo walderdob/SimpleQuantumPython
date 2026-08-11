@@ -7,7 +7,7 @@ def random_number_gen(n):
     # ψ = |0>^n
     ψ = kronPower(z_state, n)
     # Apply Hadamard to all qubits in the state
-    for i in range(n): ψ = qubitWiseMultiply(ψ, n, h_gate, i)
+    for i in range(n): ψ = applyH(ψ, i)
     
     # Return the measurement of all qubits
     return measureState(ψ)
