@@ -56,22 +56,25 @@ def qubitWiseMultiply(ψ: torch.Tensor, n: int, U: torch.Tensor, i_w: int, listO
     return b
  
 # Apply gates
-def applyH(ψ: torch.Tensor, qubit_index: int) -> torch.Tensor:
-    return qubitWiseMultiply(ψ, int(math.log2(len(ψ))), h_gate, qubit_index)
+def applyH(ψ: torch.Tensor, i_w: int) -> torch.Tensor:
+    return qubitWiseMultiply(ψ, int(math.log2(len(ψ))), h_gate, i_w)
 
-def applyX(ψ: torch.Tensor, qubit_index: int) -> torch.Tensor:
-    return qubitWiseMultiply(ψ, int(math.log2(len(ψ))), x_gate, qubit_index)
+def applyX(ψ: torch.Tensor, i_w: int) -> torch.Tensor:
+    return qubitWiseMultiply(ψ, int(math.log2(len(ψ))), x_gate, i_w)
 
-def applyZ(ψ: torch.Tensor, qubit_index: int) -> torch.Tensor:
-    return qubitWiseMultiply(ψ, int(math.log2(len(ψ))), z_gate, qubit_index)
+def applyY(ψ: torch.Tensor, i_w: int) -> torch.Tensor:
+    return qubitWiseMultiply(ψ, int(math.log2(len(ψ))), y_gate, i_w)
 
-def applyCNOT(ψ: torch.Tensor, control_index: int, target_index: int) -> torch.Tensor:
+def applyZ(ψ: torch.Tensor, i_w: int) -> torch.Tensor:
+    return qubitWiseMultiply(ψ, int(math.log2(len(ψ))), z_gate, i_w)
+
+def applyCNOT(ψ: torch.Tensor, i_w: int, j_w: int) -> torch.Tensor:
     return qubitWiseMultiply(ψ, int(math.log2(len(ψ))), x_gate,
-        target_index, [[control_index, True]])
+        j_w, [[i_w, True]])
 
-def applyCZ(ψ: torch.Tensor, control_index: int, target_index: int) -> torch.Tensor:
+def applyCZ(ψ: torch.Tensor, i_w: int, j_w: int) -> torch.Tensor:
     return qubitWiseMultiply(ψ, int(math.log2(len(ψ))), z_gate, 
-        target_index, [[control_index, True]])
+        j_w, [[i_w, True]])
 
 def swapBits(k: int, i: int, j: int) -> int:
     if(i == j): return k
@@ -125,9 +128,9 @@ def measureState(ψ: torch.Tensor) -> int:
     
     return collapsed.item()
 
-def measureQubit(ψ: torch.Tensor, n: int, i_w: int):
+def measureQubit(ψ: torch.Tensor, i_w: int):
     p = [0.0, 0.0]
-    for i in range(1 << n):
+    for i in range(len(ψ)):
         ps = torch.abs(ψ[i])**2
         
         if ((i >> i_w) & 1): p[1] += ps
@@ -136,7 +139,7 @@ def measureQubit(ψ: torch.Tensor, n: int, i_w: int):
     out = torch.multinomial(torch.tensor(p), 1).item()
     
     newψ = ψ.clone()
-    for i in range(1 << n):
+    for i in range(len(ψ)):
         bit = (i >> i_w) & 1
         if (bit != out): newψ[i] = 0
     
@@ -145,16 +148,33 @@ def measureQubit(ψ: torch.Tensor, n: int, i_w: int):
     return out, newψ
 
 def printState(ψ: torch.Tensor) -> None:
-    out = "|ψ⟩ = "
-    n = int(math.log2(len(ψ)))
-    for i in range(len(ψ)):
-        if (ψ[i].item().real == 0): value = f"{(ψ[i].item().imag):.2f}"
-        elif (ψ[i].item().imag == 0): value = f"{(ψ[i].item().real):.2f}"
-        else: value = f"{(ψ[i].item()):.3f}"
-        
-        out += value + f"|{i:0{n}b}⟩" + " + "
+    out = ""
     
-    print(out[:-3])
+    n = int(math.log2(len(ψ)))
+    first = True
+    
+    for i in range(len(ψ)):
+        num = ψ[i].item()
+        
+        if abs(num) < 1e-10: continue
+        
+        if (abs(num.real) < 1e-10): 
+            value = f"{abs(num.imag):.2f}i"
+            sign = "-" if num.imag < 0 else "+"
+        elif (abs(num.imag) < 1e-10): 
+            value = f"{abs(num.real):.2f}"
+            sign = "-" if num.real < 0 else "+"     
+        else: 
+            value = f"({num.real:.3f}{num.imag:+.3f}i)"
+            sign = "+"
+
+        term = f"{value}|{i:0{n}b}⟩"
+        
+        if (first): out += f" {sign if sign == '-' else ''}{term} "
+        else: out += f"{sign} {term} "
+        first = False
+    
+    print("|ψ⟩ =" + out)
 
 def printProbabilities(ψ: torch.Tensor) -> None:
     out = ""
@@ -162,12 +182,11 @@ def printProbabilities(ψ: torch.Tensor) -> None:
     ψ = probabilities(ψ)
     
     for i in range(len(ψ)):
-        value = f"{(ψ[i].item()):.2f}"
+        value = f"{(ψ[i].item())*100:.2f}"
         
-        out += f"|{i:0{n}b}⟩: " + value + "\n"
+        out += f"|{i:0{n}b}⟩: " + value + "%\n"
     
     print(out[:-1])
 
-    
 def printMeasurement(ψ: torch.Tensor) -> None:
     print(measureState(ψ))
