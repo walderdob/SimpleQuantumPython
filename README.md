@@ -1,7 +1,26 @@
 # Simple Quantum in Python
 Library that facilitates the creation and simulation of simple quantum circuits.
 
-## Variables and gates:
+# Quickstart
+
+```python
+from sqp import *
+
+n = 2
+ψ = kronPower(z_state, n)
+ψ = applyH(ψ, 0)
+ψ = applyCNOT(ψ, 0, 1)
+
+printState(ψ)
+printProbabilities(ψ)
+```
+<table><tr><td>
+Output:
+  <br />
+$\frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$
+</td></tr></table>
+
+# Built-in States and Gates
 `z_state:` $\lvert 0 \rangle$\
 `o_state:` $\lvert 1 \rangle$\
 `h_gate:` Hadamard gate\
@@ -9,16 +28,28 @@ Library that facilitates the creation and simulation of simple quantum circuits.
 `y_gate:` Pauli-Y gate\
 `z_gate:` Pauli-Z gate
 
-## Methods:
+# State Operations
 `innerProduct(ket0, ket1):` Generates the outer product of the quantum states. Inputs are $\lvert \psi_0 \rangle$ and  $\lvert \psi_1 \rangle$ and return  $\langle \psi_0 \lvert \psi_1 \rangle$.\
 `outerProduct(ket0, ket1):` Generates the outer product of the quantum states. Inputs are $\lvert \psi_0 \rangle$ and  $\lvert \psi_1 \rangle$ and return $\lvert \psi_0 \rangle \langle \psi_1 \lvert$.\
 `kronPower(ket, times):` Computes the tensor power of a quantum state. Inputs are $\lvert \psi \rangle$ and a positive integer and return $\lvert \psi \rangle^{\otimes times}$.\
-`qubitWiseMultiply(ψ, n, U, i_w, listOfControlBits):` Apply a single-qubit gate to qubit i_w. Inputs are $\psi$, quantum state, $n$, number of qubits in simulation, $U$, gate being applied, i_w, index of line where gate is being applied and listOfControlBits, array with array in the format [qubit, True or False] apply a control bit to a line.\
-`applySwap(ψ, n, i_w, j_w, listOfControlBits):` Swap the values of qubit *i_w* and *j_w*. Inputs are $\psi$, quantum state, n, number of bits, i_w, qubit 1, j_w, qubit 2, and also a list of the control bits.\
+`qubitWiseMultiply(ψ, n, U, i_w, listOfControlBits):` Apply a single-qubit gate to qubit i_w. Inputs are $\psi$, quantum state, $n$, number of qubits in simulation, $U$, gate being applied, i_w, index of line where gate is being applied and listOfControlBits, array with array in the format [qubit, True or False] apply a control bit to a line.
+
+# Gate Operations
+`applyH(ψ, i_w):` Apply Hadamard gate to state ψ and qubit *i_w*.\
+`applyX(ψ, i_w):` Apply Pauli-X gate to state ψ and qubit *i_w* .\
+`applyY(ψ, i_w):` Apply Pauli-Y gate to state ψ and qubit *i_w* .\
+`applyZ(ψ, i_w):` Apply Pauli-Z gate to state ψ and qubit *i_w*.\
+`applyCNOT(ψ, i_w, j_w):` Apply CNOT gate to state ψ and qubit *j_w* controlled by qubit *i_w*.\
+`applyCZ(ψ, i_w, j_w):` Apply Hadamard gate to state ψ and qubit *j_w* controlled by qubit *i_w*.\
+`applySwap(ψ, n, i_w, j_w, listOfControlBits):` Swap the values of qubit *i_w* and *j_w*. Inputs are $\psi$, quantum state, n, number of bits, i_w, qubit 1, j_w, qubit 2, and also a list of the control bits.
+
+# Measurements and Printing
 `probabilities(ψ):` Return the probability of each qubit in state $\psi$. Input is $\psi$, quantum state.\
 `measureState(ψ):` Collapse the quantum state $\psi$ and return its final value. Input is $\psi$, quantum state.\
-`measureQubit(ψ, n, i_w):` Measure a specific qubit from the $\psi$, return the value of the qubit and the new quantum state. Inputs are $psi$, quantum state, $n$, number of qubits, i_w, index of qubit being measured.\
-`infoPrint(ψ):` Print the quantum state, the probabilities of each qubit, and the final measured state. Input is $\psi$, quantum state. (It will collapse all the qubits in the circuit due to the measureState method).
+`measureQubit(ψ, i_w):` Measure a specific qubit from the $\psi$, return the value of the qubit and the new quantum state. Inputs are $psi$, quantum state, $n$, number of qubits, i_w, index of qubit being measured.\
+`printState(ψ):` Print the quantum state $\psi$.\
+`printProbabilities(ψ):` Print the probabilities of the quantum state $\psi$.
+`printMeasurement(ψ):` Measure the state $\psi$ and print it.
 
 # Examples
 ## Entanglement
