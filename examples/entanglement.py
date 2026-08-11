@@ -8,14 +8,12 @@ def entanglement():
     ψ = kronPower(z_state, n)
     ψ = applyH(ψ, 0)
     ψ = applyCNOT(ψ, 0, 1)
-    ψ = applyZ(ψ, 0)
     
     return ψ
 
 def main():
     printState(entanglement())
     printProbabilities(entanglement())
-    
     
 if __name__ == '__main__':
     main()

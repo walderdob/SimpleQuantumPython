@@ -19,8 +19,8 @@ def simple_teleportation():
     ψ = torch.kron(ψ, ϕ)
     ψ = applyCNOT(ψ, 0, 1)
     ψ = applyH(ψ, 0)
-    q, ψ = measureQubit(ψ, n, 0)
-    a, ψ = measureQubit(ψ, n, 1)
+    q, ψ = measureQubit(ψ, 0)
+    a, ψ = measureQubit(ψ, 1)
     
     # Applying X and Z gates depending on the bits a, and q
     if (a == 1): ψ = applyX(ψ, 2)
