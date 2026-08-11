@@ -15,9 +15,11 @@ printState(ψ)
 printProbabilities(ψ)
 ```
 <table><tr><td>
-Output:
+<strong>Output:</strong>
   <br />
-$\frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$
+|ψ⟩ = 0.71|00⟩ + 0.71|11⟩ <br /> <br />
+|00⟩ : 50.00% <br />
+|11⟩ : 50.00%
 </td></tr></table>
 
 # Built-in States and Gates
@@ -29,8 +31,8 @@ $\frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$
 `z_gate:` Pauli-Z gate
 
 # State Operations
-`innerProduct(ket0, ket1):` Generates the outer product of the quantum states. Inputs are $\lvert \psi_0 \rangle$ and  $\lvert \psi_1 \rangle$ and return  $\langle \psi_0 \lvert \psi_1 \rangle$.\
-`outerProduct(ket0, ket1):` Generates the outer product of the quantum states. Inputs are $\lvert \psi_0 \rangle$ and  $\lvert \psi_1 \rangle$ and return $\lvert \psi_0 \rangle \langle \psi_1 \lvert$.\
+`innerProduct(ket0, ket1):` Computes the inner product of the quantum states. Inputs are $\lvert \psi_0 \rangle$ and  $\lvert \psi_1 \rangle$ and return  $\langle \psi_0 \lvert \psi_1 \rangle$.\
+`outerProduct(ket0, ket1):` Computes the outer product of the quantum states. Inputs are $\lvert \psi_0 \rangle$ and  $\lvert \psi_1 \rangle$ and return $\lvert \psi_0 \rangle \langle \psi_1 \lvert$.\
 `kronPower(ket, times):` Computes the tensor power of a quantum state. Inputs are $\lvert \psi \rangle$ and a positive integer and return $\lvert \psi \rangle^{\otimes times}$.\
 `qubitWiseMultiply(ψ, n, U, i_w, listOfControlBits):` Apply a single-qubit gate to qubit i_w. Inputs are $\psi$, quantum state, $n$, number of qubits in simulation, $U$, gate being applied, i_w, index of line where gate is being applied and listOfControlBits, array with array in the format [qubit, True or False] apply a control bit to a line.
 
@@ -39,8 +41,8 @@ $\frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$
 `applyX(ψ, i_w):` Apply Pauli-X gate to state ψ and qubit *i_w* .\
 `applyY(ψ, i_w):` Apply Pauli-Y gate to state ψ and qubit *i_w* .\
 `applyZ(ψ, i_w):` Apply Pauli-Z gate to state ψ and qubit *i_w*.\
-`applyCNOT(ψ, i_w, j_w):` Apply CNOT gate to state ψ and qubit *j_w* controlled by qubit *i_w*.\
-`applyCZ(ψ, i_w, j_w):` Apply Hadamard gate to state ψ and qubit *j_w* controlled by qubit *i_w*.\
+`applyCNOT(ψ, i_w, j_w):` Apply controlled-X gate to state ψ and qubit *j_w* controlled by qubit *i_w*.\
+`applyCZ(ψ, i_w, j_w):` Apply controlled-Z gate to state ψ and qubit *j_w* controlled by qubit *i_w*.\
 `applySwap(ψ, n, i_w, j_w, listOfControlBits):` Swap the values of qubit *i_w* and *j_w*. Inputs are $\psi$, quantum state, n, number of bits, i_w, qubit 1, j_w, qubit 2, and also a list of the control bits.
 
 # Measurements and Printing
@@ -63,10 +65,11 @@ Diagram I used to design the quantum teleportation method example [2]:
 ![Teleportation circuit](https://quantum.cloud.ibm.com/learning/images/courses/basics-of-quantum-information/entanglement-in-action/teleportation-time-steps.svg?dpl=0-1-1564-8eac441376a9)
 **`examples/simple_teleportation.py`**
 
-# Future additions
-- More gates, and changing gates
+# Planned Features
+- More gates
 - $\text{QFT}$ and $\text{QFT}^{\dagger}$
-- Then, more example circuits!
+- More example circuits!
+- Density Matrix
 
 # References
 [1] https://arxiv.org/pdf/2506.08142 \
