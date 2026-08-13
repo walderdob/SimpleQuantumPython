@@ -1,9 +1,14 @@
 [build-system]
 requires = ["hatchling >= 1.26"]
 build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+src = ["src"]
+packages = ["src/sqp_quantum"]
+
 [project]
-name = "sqp_package_walderdob"
-version = "1.0.0"
+name = "sqp-quantum"
+version = "1.0.4"
 authors = [
   { name="Waldemar Renato Batista", email="wrenato91@gmail.com" },
 ]
@@ -16,6 +21,10 @@ classifiers = [
 ]
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
+dependencies = [
+	"torch",
+	"numpy",
+]
 
 [project.urls]
 Homepage = "https://github.com/walderdob/SimpleQuantumPython/"

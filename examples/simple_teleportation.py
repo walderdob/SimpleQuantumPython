@@ -1,6 +1,4 @@
-import sys
-sys.path.insert(0, '../')
-from sqp import *
+from sqp_quantum import *
 import torch
 
 def simple_teleportation():
