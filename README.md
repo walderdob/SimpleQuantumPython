@@ -3,6 +3,12 @@ Library that facilitates the creation and simulation of simple quantum circuits.
 
 # Quickstart
 
+## Installation
+```bash
+pip install -i https://test.pypi.org/simple/ sqp-quantum
+```
+
+## Usage
 ```python
 from sqp import *
 
@@ -69,6 +75,7 @@ Diagram I used to design the quantum teleportation method example [2]:
 - More gates
 - $\text{QFT}$ and $\text{QFT}^{\dagger}$
 - More example circuits!
+- Upload it to official PyPi page
 - Density Matrix
 
 # References
