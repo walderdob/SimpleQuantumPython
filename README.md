@@ -1,5 +1,6 @@
 # Simple Quantum in Python
-Library that facilitates the creation and simulation of simple quantum circuits.
+Library that facilitates the creation and simulation of simple quantum circuits.\
+Created for educational purposes.
 
 # Quickstart
 
