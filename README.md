@@ -55,7 +55,7 @@ printProbabilities(ψ)
 # Measurements and Printing
 `probabilities(ψ):` Return the probability of each qubit in state $\psi$. Input is $\psi$, quantum state.\
 `measureState(ψ):` Collapse the quantum state $\psi$ and return its final value. Input is $\psi$, quantum state.\
-`measureQubit(ψ, i_w):` Measure a specific qubit from the $\psi$, return the value of the qubit and the new quantum state. Inputs are $psi$, quantum state, $n$, number of qubits, i_w, index of qubit being measured.\
+`measureQubit(ψ, i_w):` Measure a specific qubit from the $\psi$, return the value of the qubit and the new quantum state. Inputs are $\psi$, quantum state, $n$, number of qubits, i_w, index of qubit being measured.\
 `printState(ψ):` Print the quantum state $\psi$.\
 `printProbabilities(ψ):` Print the probabilities of the quantum state $\psi$.\
 `printMeasurement(ψ):` Measure the state $\psi$ and print it.
